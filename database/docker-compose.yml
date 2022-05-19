@@ -1,0 +1,87 @@
+version: "3.9"
+services:
+  # mariadb:
+  #   container_name: mariadb
+  #   image: mariadb:latest
+  #   restart: on-failure
+  #   # restart: unless-stopped
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     # - /var/lib/mysql/data:${MARIADB_DATA_DIR
+  #     # - /var/lib/mysql/logs:${MARIADB_LOG_DIR
+  #     # - /var/docker/mariadb/conf:/etc/mysql
+  #     - mariadb_volume:/var/lib/mysql
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     # MYSQL_DATABASE: ${MYSQL_DATABASE}
+  #     MYSQL_USER: root
+  #     MYSQL_PASSWORD: root
+  #   networks:
+  #     - internal
+
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    # restart: unless-stopped
+    restart: on-failure
+    # restart: always
+    # tty: true
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_volume:/data/db
+    environment:
+      # MONGO_INITDB_ROOT_USERNAME: mongo
+      # MONGO_INITDB_ROOT_PASSWORD: mongo
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      - internal
+
+  # postgres-postgis:
+  #   container_name: postgres-postgis
+  #   image: postgis/postgis:latest
+  #   # restart: unless-stopped
+  #   restart: on-failure
+  #   # restart: always
+  #   # tty: true
+  #   ports:
+  #     - 5432:5432
+  #   volumes:
+  #     - postgres-postgis_volume:/var/lib/postgresql/data
+  #   environment:
+  #     # POSTGRES_DB: postgres
+  #     # POSTGRES_USER: postgres
+  #     # POSTGRES_PASSWORD: postgres
+  #     POSTGRES_USER: root
+  #     POSTGRES_PASSWORD: root
+  #   networks:
+  #     - internal
+
+  # mysql:
+  #   image: mysql:5.7.22
+  #   container_name: mysql
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - ./mysql:/var/lib/mysql
+  #   environment:
+  #     MYSQL_DATABASE: siaksi
+  #     MYSQL_USER: root
+  #     MYSQL_PASSWORD: root
+  #     MYSQL_ROOT_PASSWORD: root
+  #     SERVICE_TAGS: dev
+  #     SERVICE_NAME: mysql
+  #   networks:
+  #     - web
+
+volumes:
+  # mariadb_volume:
+  mongo_volume:
+  # postgres-postgis_volume:
+networks:
+  internal:
+    driver: bridge

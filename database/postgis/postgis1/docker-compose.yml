@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  postgis1:
+    container_name: postgis1
+    image: postgis/postgis:latest
+    # restart: unlessc-stopped
+    restart: on-failure
+    # restart: always
+    # tty: true
+    ports:
+      - 5433:5432
+    volumes:
+      - postgis_volume:/var/lib/postgresql/data
+    environment:
+      # POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - internal
+  
+volumes:
+  postgis_volume: 
+networks:
+  internal:
+    driver: bridge

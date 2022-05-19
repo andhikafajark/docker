@@ -1,0 +1,38 @@
+# version: "3.9"
+services:
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    restart: on-failure
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    # depends_on:
+      # - mysql
+      # - php
+    networks:
+      - internal
+      - database_internal
+
+  php:
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: master/php:fpm
+    container_name: php-latest
+    volumes:
+      - ./src:/var/www/html
+      - ./php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    ports:
+      - "9000:9000"
+    networks:
+      - internal
+      - database_internal
+
+networks:
+  internal:
+    driver: bridge
+  database_internal:
+    external: true

@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+
+  php-apache:
+    image: master/php-apache:latest
+    container_name: php-apache
+    restart: always
+    volumes:
+      - ./apache/000-default.conf:/etc/apache2/sites-available/000-default.conf
+      - ./src:/var/www/html
+      - ./php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    ports:
+      - "80:80"
+      # - "443:443"
